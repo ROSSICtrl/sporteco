@@ -20,28 +20,17 @@ import geopandas as gpd
 from branca.colormap import LinearColormap
 
 # Constants
-if 'STREAMLIT_CLOUD' in os.environ:
-    BASE_PATH = "/mount/src/sporteco"
-else:
-    # Get the absolute path to the project root directory
-    BASE_PATH = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
-
-# Print the base path for debugging
-st.write(f"Debug - BASE_PATH: {BASE_PATH}")
-
+BASE_PATH = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 PATHS = {
     'images': os.path.join(BASE_PATH, "images"),
     'data': os.path.join(BASE_PATH, "data"),
     'notebooks': os.path.join(BASE_PATH, "notebooks")
 }
 
-# Print paths for debugging
-st.write(f"Debug - PATHS['images']: {PATHS['images']}")
-
 ASSETS = {
     'logo': os.path.join(PATHS['images'], "logo-vectoriel-le-wagon-removebg-preview.png"),
     'main_data': os.path.join(PATHS['data'], "main.xlsx"),
-    'notebook': os.path.join(PATHS['notebooks'], "visu_dpt.ipynb"),
+    'notebook': 'notebooks/visu_dpt.ipynb',
     'jose_gif': os.path.join(PATHS['images'], "jose.gif"),
     'logo_sporteco': os.path.join(PATHS['images'], "logo sporteco.jpeg"),
     'lofo_lfp': os.path.join(PATHS['images'], "lofo-lfp.png"),
@@ -58,8 +47,11 @@ ASSETS = {
     'asana': os.path.join(PATHS['images'], "asana.png"),
     'bigquery': os.path.join(PATHS['images'], "bigquery.png"),
     'drive': os.path.join(PATHS['images'], "drive.png"),
+    'python': os.path.join(PATHS['images'], "python-removebg-preview.png"),
     'vsc': os.path.join(PATHS['images'], "vsc-removebg-preview.png"),
-    'github': os.path.join(PATHS['images'], "github-removebg-preview.png")
+    'github': os.path.join(PATHS['images'], "github-removebg-preview.png"),
+    'option1': os.path.join(PATHS['images'], "option1.webp"),
+    'option2': os.path.join(PATHS['images'], "option2.webp")
 }
 
 # Color mappings
@@ -209,29 +201,10 @@ def center_text(text, size=1):
     """Centers text with specified heading size."""
     st.markdown(f"<h{size} style='text-align: center;'>{text}</h{size}>", unsafe_allow_html=True)
 
-def load_image(image_path):
-    """Safely load an image file, returning None if the file doesn't exist."""
-    try:
-        if not image_path:
-            st.error(f"Image path is empty or None")
-            return None
-        if not os.path.exists(image_path):
-            st.error(f"Image not found at path: {image_path}")
-            return None
-        
-        # Print debug info
-        st.write(f"Debug - Attempting to load image: {image_path}")
-        
-        with open(image_path, "rb") as f:
-            return f.read()
-    except Exception as e:
-        st.error(f"Error loading image {image_path}: {str(e)}")
-        return None
-
 # Display the main application layout
 st.set_page_config(
     page_title="Drwatobut",
-    page_icon=load_image(ASSETS['logo_sporteco']),
+    page_icon=ASSETS['logo_sporteco'],
     layout="wide",
     initial_sidebar_state="expanded"
 )
@@ -439,21 +412,13 @@ with tab1:
             # Première ligne de logos
             _, col1, col2, col3, col4, _ = st.columns([0.5, 1, 1, 1, 1, 0.5])
             with col1:
-                img_data = load_image(ASSETS['lofo_lfp'])
-                if img_data:
-                    st.image(img_data, width=100)
+                st.image(ASSETS['lofo_lfp'], width=100)
             with col2:
-                img_data = load_image(ASSETS['logo_datagouv'])
-                if img_data:
-                    st.image(img_data, width=100)
+                st.image(ASSETS['logo_datagouv'], width=100)
             with col3:
-                img_data = load_image(ASSETS['logo_insee'])
-                if img_data:
-                    st.image(img_data, width=100)
+                st.image(ASSETS['logo_insee'], width=100)
             with col4:
-                img_data = load_image(ASSETS['logo_trasnfermarkt'])
-                if img_data:
-                    st.image(img_data, width=100)
+                st.image(ASSETS['logo_trasnfermarkt'], width=100)
 
             # Espacement
             st.markdown("<br>", unsafe_allow_html=True)
@@ -461,17 +426,11 @@ with tab1:
             # Deuxième ligne de logos avec colonnes centrées
             _, col1, col2, col3, _ = st.columns([0.5, 1, 1, 1, 0.5])
             with col1:
-                img_data = load_image(ASSETS['logo_uefa'])
-                if img_data:
-                    st.image(img_data, width=100)
+                st.image(ASSETS['logo_uefa'], width=100)
             with col2:
-                img_data = load_image(ASSETS['logocurssaf'])
-                if img_data:
-                    st.image(img_data, width=100)
+                st.image(ASSETS['logocurssaf'], width=100)
             with col3:
-                img_data = load_image(ASSETS['logofifa'])
-                if img_data:
-                    st.image(img_data, width=100)
+                st.image(ASSETS['logofifa'], width=100)
 
         # Notre équipe
         st.markdown("---")
@@ -482,19 +441,19 @@ with tab1:
         <div class="team-section">
             <div class="team-container">
                 <div class="team-member">
-                    {st.image(load_image(ASSETS['clement']), use_column_width=True) if load_image(ASSETS['clement']) else ''}
+                    <img src="data:image/jpeg;base64,{base64.b64encode(open(ASSETS['clement'], "rb").read()).decode()}"/>
                     <div class="team-name">Clément ROSSI</div>
                 </div>
                 <div class="team-member">
-                    {st.image(load_image(ASSETS['yohann']), use_column_width=True) if load_image(ASSETS['yohann']) else ''}
+                    <img src="data:image/jpeg;base64,{base64.b64encode(open(ASSETS['yohann'], "rb").read()).decode()}"/>
                     <div class="team-name">Yohann CEBALS</div>
                 </div>
                 <div class="team-member">
-                    {st.image(load_image(ASSETS['louis']), use_column_width=True) if load_image(ASSETS['louis']) else ''}
+                    <img src="data:image/jpeg;base64,{base64.b64encode(open(ASSETS['louis'], "rb").read()).decode()}"/>
                     <div class="team-name">Louis TANG</div>
                 </div>
                 <div class="team-member">
-                    {st.image(load_image(ASSETS['edriss']), use_column_width=True) if load_image(ASSETS['edriss']) else ''}
+                    <img src="data:image/jpeg;base64,{base64.b64encode(open(ASSETS['edriss'], "rb").read()).decode()}"/>
                     <div class="team-name">Edriss BEN JEMAA</div>
                 </div>
             </div>
@@ -510,33 +469,26 @@ with tab1:
         _, col1, col2, col3, _ = st.columns([0.5, 1, 1, 1, 0.5])
 
         with col1:
-            img_data = load_image(ASSETS['asana'])
-            if img_data:
-                st.image(img_data, caption="Asana", use_column_width=True)
+            st.image(ASSETS['asana'], caption="Asana", use_column_width=True)
         with col2:
-            img_data = load_image(ASSETS['bigquery'])
-            if img_data:
-                st.image(img_data, caption="BigQuery", use_column_width=True)
+            st.image(ASSETS['bigquery'], caption="BigQuery", use_column_width=True)
         with col3:
-            img_data = load_image(ASSETS['drive'])
-            if img_data:
-                st.image(img_data, caption="Drive", use_column_width=True)
+            st.image(ASSETS['drive'], caption="Drive", use_column_width=True)
 
         # Add some spacing between rows
         st.markdown("<br>", unsafe_allow_html=True)
 
         # Second row of images
-        col4, col5 = st.columns([1, 1])
+        _, col4, col5, col6, _ = st.columns([0.5, 1, 1, 1, 0.5])
 
         with col4:
-            img_data = load_image(ASSETS['vsc'])
-            if img_data:
-                st.image(img_data, use_column_width=True)
-            st.markdown("<p style='text-align: center;'>Visual Studio Code</p>", unsafe_allow_html=True)
+            st.image(ASSETS['python'], use_column_width=True)
+            st.markdown("<p style='text-align: center;'>Python</p>", unsafe_allow_html=True)
         with col5:
-            img_data = load_image(ASSETS['github'])
-            if img_data:
-                st.image(img_data, use_column_width=True)
+            st.image(ASSETS['vsc'], use_column_width=True)
+            st.markdown("<p style='text-align: center;'>Visual Studio Code</p>", unsafe_allow_html=True)
+        with col6:
+            st.image(ASSETS['github'], use_column_width=True)
             st.markdown("<p style='text-align: center;'>GitHub</p>", unsafe_allow_html=True)
 
         # Ajout d'un séparateur
@@ -1276,14 +1228,10 @@ with tab3:
             st.info("Aucun club n'a été trouvé dans ce département.")
 
     with reveal_opt1_tab:
-        img_data = load_image(os.path.join(PATHS['images'], "option1.webp"))
-        if img_data:
-            st.image(img_data, use_column_width=True)
+        st.image(ASSETS['option1'], use_column_width=True)
 
     with reveal_opt2_tab:
-        img_data = load_image(os.path.join(PATHS['images'], "option2.webp"))
-        if img_data:
-            st.image(img_data, use_column_width=True)
+        st.image(ASSETS['option2'], use_column_width=True)
 
 # Close main-content div
 st.markdown('</div>', unsafe_allow_html=True)
