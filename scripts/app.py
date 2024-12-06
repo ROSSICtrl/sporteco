@@ -471,19 +471,19 @@ with tab1:
         <div class="team-section">
             <div class="team-container">
                 <div class="team-member">
-                    <img src="data:image/jpeg;base64,{base64.b64encode(load_image(ASSETS['clement'])).decode()}"/>
+                    {f'''<img src="data:image/jpeg;base64,{base64.b64encode(load_image(ASSETS['clement'])).decode()}" />''' if load_image(ASSETS['clement']) else ''}
                     <div class="team-name">Clément ROSSI</div>
                 </div>
                 <div class="team-member">
-                    <img src="data:image/jpeg;base64,{base64.b64encode(load_image(ASSETS['yohann'])).decode()}"/>
+                    {f'''<img src="data:image/jpeg;base64,{base64.b64encode(load_image(ASSETS['yohann'])).decode()}" />''' if load_image(ASSETS['yohann']) else ''}
                     <div class="team-name">Yohann CEBALS</div>
                 </div>
                 <div class="team-member">
-                    <img src="data:image/jpeg;base64,{base64.b64encode(load_image(ASSETS['louis'])).decode()}"/>
+                    {f'''<img src="data:image/jpeg;base64,{base64.b64encode(load_image(ASSETS['louis'])).decode()}" />''' if load_image(ASSETS['louis']) else ''}
                     <div class="team-name">Louis TANG</div>
                 </div>
                 <div class="team-member">
-                    <img src="data:image/jpeg;base64,{base64.b64encode(load_image(ASSETS['edriss'])).decode()}"/>
+                    {f'''<img src="data:image/jpeg;base64,{base64.b64encode(load_image(ASSETS['edriss'])).decode()}" />''' if load_image(ASSETS['edriss']) else ''}
                     <div class="team-name">Edriss BEN JEMAA</div>
                 </div>
             </div>
