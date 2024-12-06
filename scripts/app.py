@@ -23,13 +23,20 @@ from branca.colormap import LinearColormap
 if 'STREAMLIT_CLOUD' in os.environ:
     BASE_PATH = "/mount/src/sporteco"
 else:
-    BASE_PATH = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    # Get the absolute path to the project root directory
+    BASE_PATH = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+
+# Print the base path for debugging
+st.write(f"Debug - BASE_PATH: {BASE_PATH}")
 
 PATHS = {
     'images': os.path.join(BASE_PATH, "images"),
     'data': os.path.join(BASE_PATH, "data"),
     'notebooks': os.path.join(BASE_PATH, "notebooks")
 }
+
+# Print paths for debugging
+st.write(f"Debug - PATHS['images']: {PATHS['images']}")
 
 ASSETS = {
     'logo': os.path.join(PATHS['images'], "logo-vectoriel-le-wagon-removebg-preview.png"),
@@ -211,6 +218,10 @@ def load_image(image_path):
         if not os.path.exists(image_path):
             st.error(f"Image not found at path: {image_path}")
             return None
+        
+        # Print debug info
+        st.write(f"Debug - Attempting to load image: {image_path}")
+        
         with open(image_path, "rb") as f:
             return f.read()
     except Exception as e:
@@ -471,19 +482,19 @@ with tab1:
         <div class="team-section">
             <div class="team-container">
                 <div class="team-member">
-                    {f'''<img src="data:image/jpeg;base64,{base64.b64encode(load_image(ASSETS['clement'])).decode()}" />''' if load_image(ASSETS['clement']) else ''}
+                    {st.image(load_image(ASSETS['clement']), use_column_width=True) if load_image(ASSETS['clement']) else ''}
                     <div class="team-name">Clément ROSSI</div>
                 </div>
                 <div class="team-member">
-                    {f'''<img src="data:image/jpeg;base64,{base64.b64encode(load_image(ASSETS['yohann'])).decode()}" />''' if load_image(ASSETS['yohann']) else ''}
+                    {st.image(load_image(ASSETS['yohann']), use_column_width=True) if load_image(ASSETS['yohann']) else ''}
                     <div class="team-name">Yohann CEBALS</div>
                 </div>
                 <div class="team-member">
-                    {f'''<img src="data:image/jpeg;base64,{base64.b64encode(load_image(ASSETS['louis'])).decode()}" />''' if load_image(ASSETS['louis']) else ''}
+                    {st.image(load_image(ASSETS['louis']), use_column_width=True) if load_image(ASSETS['louis']) else ''}
                     <div class="team-name">Louis TANG</div>
                 </div>
                 <div class="team-member">
-                    {f'''<img src="data:image/jpeg;base64,{base64.b64encode(load_image(ASSETS['edriss'])).decode()}" />''' if load_image(ASSETS['edriss']) else ''}
+                    {st.image(load_image(ASSETS['edriss']), use_column_width=True) if load_image(ASSETS['edriss']) else ''}
                     <div class="team-name">Edriss BEN JEMAA</div>
                 </div>
             </div>
